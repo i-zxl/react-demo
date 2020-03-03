@@ -11,9 +11,11 @@ export interface INavItemProps {
   key: string
   callback(navItem: INavItem): void
 }
+
 export interface INavComponent {
   navList: INavItem[]
 }
+
 function NavItemComponent (props: INavItemProps) {
   const change = () => {
     props.callback(props.navItem)
@@ -26,12 +28,13 @@ function NavItemComponent (props: INavItemProps) {
 }
 
 class NavComponent extends React.Component {
-  constructor(props: INavComponent) {
+  constructor(props: INavComponent) { 
     super(props);
     this.state = { 
       actived: '1',
     };
   }
+
   public handleChange(navItem: INavItem): void {
     this.setState({actived: navItem.name});
   }
@@ -39,17 +42,19 @@ class NavComponent extends React.Component {
   public render(): JSX.Element {
     const navList = [{
       name: 'Web前端',
+      url: '/web'
     }, {
       name: 'NodeJS',
     }, {
       name: 'Mobile',
     }];
+    const callback = this.handleChange.bind(this);
     return (
       <div className="nav-list">
         <ul>
         { 
           navList.map( (nav: INavItem) => {
-            return <NavItemComponent key={nav.name} navItem={nav} callback={this.handleChange}/>
+            return <NavItemComponent key={nav.name} navItem={nav} callback={callback}/>
           })
         }
         </ul>
